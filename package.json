@@ -1,7 +1,7 @@
 {
   "name": "open-terminal-here",
   "main": "./lib/open-terminal-here",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "(OS-X Only) Adds a shortcut to Tree View - Open Terminal Here in the context menu",
   "activationEvents": [
     "open-terminal-here:open"
