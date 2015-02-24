@@ -1,5 +1,6 @@
 exec = require("child_process").exec
 path = require('path')
+fs = require('fs')
 
 module.exports =
 
@@ -17,11 +18,12 @@ module.exports =
     isDarwin = document.body.classList.contains("platform-darwin")
     isWin32 = document.body.classList.contains("platform-win32")
 
-    selectedView = atom.workspaceView.find('.tree-view .selected')?.view()
-    isDir = selectedView?.hasClass("directory")
-    isFile = selectedView?.hasClass("file")
-    thepath = selectedView?.getPath()
-    dirpath = if isFile then path.dirname thepath else thepath
+    filepath = atom.workspaceView.find('.tree-view .selected').views()?[0][0].getPath?()
+
+    dirpath = filepath
+
+    if fs.lstatSync(filepath).isFile()
+        dirpath = path.dirname(filepath)
 
     return if not dirpath
 
