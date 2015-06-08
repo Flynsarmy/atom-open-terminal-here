@@ -12,18 +12,19 @@ module.exports =
   },
 
   activate: ->
-    atom.workspaceView.command "open-terminal-here:open", => @open()
+    atom.commands.add '.tree-view .selected',
+      'open-terminal-here:open': (event) => @open(event.currentTarget)
 
-  open: ->
+  open: (target) ->
     isDarwin = document.body.classList.contains("platform-darwin")
     isWin32 = document.body.classList.contains("platform-win32")
 
-    filepath = atom.workspaceView.find('.tree-view .selected').views()?[0][0].getPath?()
+    filepath = target.getPath?() ? target.item?.getPath()
 
     dirpath = filepath
 
     if fs.lstatSync(filepath).isFile()
-        dirpath = path.dirname(filepath)
+      dirpath = path.dirname(filepath)
 
     return if not dirpath
 
